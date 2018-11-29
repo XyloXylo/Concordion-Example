@@ -1,0 +1,55 @@
+apply plugin: 'java'
+apply plugin: 'org.ajoberstar.github-pages'
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.ajoberstar:gradle-git:1.1.0'
+    }
+}
+
+repositories { 
+    mavenCentral()
+    mavenLocal()
+}
+
+sourceSets {
+    test {
+        resources.srcDir file('src/test/java')
+    }
+}
+
+sourceCompatibility = 1.8
+
+dependencies {
+    testCompile 'junit:junit:4.11'
+    testCompile "org.concordion:concordion:1.4.6"
+    testCompile "pl.pragmatists:concordion-rest-extension:0.5.1"
+}
+
+test {
+    group 'Concordion tests'
+    description = "Run Concordion"
+    systemProperty 'concordion.output.dir', "$buildDir/reports/concordion"
+	ignoreFailures = true
+}
+
+githubPages {
+    repoUri = 'git@github.com:Pragmatists/concordion-rest-extension-example.git'
+    pages {
+        from 'build/reports/concordion'
+    }
+}
+
+task createIndex(type: Copy) {
+    from('src/test/resources') {
+    	include 'index.html'
+    }
+    into 'build/reports/concordion/'
+}
+
+publishGhPages.dependsOn test
+publishGhPages.dependsOn createIndex

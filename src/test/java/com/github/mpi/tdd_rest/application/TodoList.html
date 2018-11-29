@@ -1,0 +1,40 @@
+<html 
+	xmlns:c="http://www.concordion.org/2007/concordion" 
+	xmlns:r="http://pragmatists.github.io/concordion-rest-extension"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://pragmatists.github.io/concordion-rest-extension http://pragmatists.github.io/concordion-rest-extension/xsd/concordion-rest.xsd">
+<body class="container">
+
+	<h2 class="page-header">Todo List Endpoint</h2>
+ 	
+ 	<div class="alert alert-success" role="alert">
+ 		This is a sample <a href="http://www.concordion.org">Concordion</a> specification page demonstrating features of the
+ 		<a href="http://github.com/Pragmatists/concordion-rest-extension">Concordion REST</a> extension. 
+ 	</div>
+ 	
+ 	<div>
+ 		<strong>To-Do List Endpoint</strong> is a rich RESTful API that enables you to manage your day-to-day tasks. <br/>
+ 		Currently, following operations are supported:
+ 		<ul>
+ 			<li><a href="#create">Search 365 Origin</a></li>
+ 		</ul>
+ 	</div>
+ 	
+ 	<h3>Search 365 Origin: </h3>
+	<div id="complete" class="panel panel-default">
+		<div class="panel-heading"><b>Search 365 Origin</b></div>
+		<div class="panel-body">
+			<!--<span c:execute="#taskID = newItem()">Given there is pending To-Do item with id <b c:echo="#taskID"></b></span>-->
+			<!--<r:request>-->
+				<!--When I send <r:post>/tasks/1/complete</r:post> <br/>-->
+				<!--Then I should receive <r:status>HTTP/1.1 200 OK</r:status>-->
+			<!--</r:request>-->
+			<r:request>
+				When I send <r:get>/search?term=accounts+savings</r:get>
+				<!--Then it should return <r:status>HTTP/1.1 200 OK</r:status>-->
+				And it should return <r:header name="x-frame-options">SAMEORIGIN</r:header>.
+			</r:request>
+		</div>
+	</div>
+</body>
+</html>
